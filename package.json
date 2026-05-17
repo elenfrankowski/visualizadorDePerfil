@@ -2,9 +2,9 @@
   "name": "visualizador_de_perfil",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/services/main.js",
   "scripts": {
-    "start": "node ./services/main.js",
+    "start": "node ./src/services/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
