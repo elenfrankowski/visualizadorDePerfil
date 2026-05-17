@@ -24,7 +24,7 @@ A organização das pastas segue o padrão MVC adaptado para terminal:
 
 ---
 
-## 🚀 Como Executar o Projeto
+## Como Executar o Projeto
 
 ### Pré-requisitos
 Certifique-se de ter o **Node.js** instalado em sua máquina.
