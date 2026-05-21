@@ -1,6 +1,6 @@
 import { stdin, stdout } from "process"; //standardIn E standardOut
 import { createInterface } from "node:readline/promises";
-import { menuController } from "../controllers/AppController.js";
+import { menuController } from "./src/controllers/AppController.js";
 
 async function main() {
   const interfaceConsole = createInterface(stdin, stdout);
@@ -14,4 +14,4 @@ async function main() {
   interfaceConsole.close();
 }
 
-main().catch((err) => console.log("Erro inesperado:", err));
+main().catch((err: any) => console.log("Erro inesperado:", err));

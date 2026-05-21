@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",                          /* Define a versão do JavaScript de saída */
+    "module": "NodeNext",                        /* Suporte nativo para ES Modules no Node */
+    "moduleResolution": "NodeNext",   
+    "types": ["node"],           /* Modo moderno de resolução de caminhos */
+    "esModuleInterop": true,                     /* Garante compatibilidade com módulos antigos */
+    "forceConsistentCasingInFileNames": true,    /* Evita problemas de maiúsculas/minúsculas no Windows */
+    "strict": true,                              /* Ativa todas as checagens rígidas de tipo */
+    "skipLibCheck": true                         /* Pula checagem de tipos de bibliotecas externas para ser mais rápido */
+  },
+  "include": ["src/**/*", "main.ts"]                        /* Avisa ao TS para monitorar apenas a pasta src */
+}

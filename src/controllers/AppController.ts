@@ -1,8 +1,9 @@
+import type { Interface } from "node:readline/promises";
 import { buscarUsuario } from "../services/GitHubApiService.js";
 import { listarUsuariosSalvos } from "../views/ConsoleView.js";
 import { salvarUsuario } from "../services/StorageService.js";
 
-export async function menuController(interfaceConsole) {
+export async function menuController(interfaceConsole: Interface): Promise<boolean> {
   console.log("\n=========================");
   console.log("          MENU           ");
   console.log("=========================");
@@ -16,7 +17,7 @@ export async function menuController(interfaceConsole) {
   // --- OPÇÃO 1: BUSCAR E SALVAR ---
   if (opcao === "1") {
     const usernameInput = await interfaceConsole.question("\nDigite o username do GitHub: ");
-    const usuario = await buscarUsuario(usernameInput);
+    const usuario: any = await buscarUsuario(usernameInput);
 
     if (!usuario) return true; // Se não achou, volta pro menu
 

@@ -1,3 +1,4 @@
+// @ts-ignore
 import { lerArquivo } from "../services/StorageService.js";
 
 export async function listarUsuariosSalvos() {
@@ -10,7 +11,7 @@ export async function listarUsuariosSalvos() {
 
   console.log("\n=== USUÁRIOS SALVOS ===");
 
-  usuarios.forEach((u, index) => {
+  usuarios.forEach((u: any, index: number) => {
     if (!u) return; // Pula se houver item nulo
     console.log(`${index + 1}. ${u.login} - (${u.name || "Sem nome"})`);
   });
