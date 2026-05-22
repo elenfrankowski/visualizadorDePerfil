@@ -10,20 +10,20 @@ const __dirname = join(__filename, "..");
 // Sobe duas pastas para achar o database.json na raiz do projeto de forma 100% segura
 const caminhoBanco = join(__dirname, "../../database.json");
 
-export async function lerArquivo() {
+export async function lerArquivo(): Promise<any[]> { //lê uma lista
   try {
     const usuariosText = await readFile(caminhoBanco, { encoding: "utf-8" });
     return JSON.parse(usuariosText);
-  } catch (error) {
+  } catch (error: any) {
     return []; // Se não existir ou falhar, retorna array vazio
   }
 }
 
-export async function salvarUsuario(usuario) {
+export async function salvarUsuario(usuario: any): Promise<void> { //faz uma ação mas não dá return de dados
   if (!usuario) return;
 
   const usuarios = await lerArquivo();
-  const usuarioJaExiste = usuarios.find((u) => u && u.id === usuario.id);
+  const usuarioJaExiste = usuarios.find((u: any) => u && u.id === usuario.id);
 
   if (usuarioJaExiste) {
     console.log("\nEsse desenvolvedor já está salvo na base de dados.");

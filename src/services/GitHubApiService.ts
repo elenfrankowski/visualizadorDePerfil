@@ -1,4 +1,4 @@
-export async function buscarUsuario(username) {
+export async function buscarUsuario(username: string) {
   const urlBase = "https://api.github.com/users/";
 
   try {
@@ -14,7 +14,7 @@ export async function buscarUsuario(username) {
     }
 
     return await response.json();
-  } catch (error) {
+  } catch (error: any) {
     console.error(`\nErro: ${error.message}`);
     return null;
   }
