@@ -2,6 +2,7 @@ import type { Interface } from "node:readline/promises";
 import { buscarUsuario } from "../services/GitHubApiService.js";
 import { listarUsuariosSalvos } from "../views/ConsoleView.js";
 import { salvarUsuario } from "../services/StorageService.js";
+import { UsuarioGithubValidator } from "../validators/UsuarioGithubValidator.js"; // Importação do novo validador estático
 
 export async function menuController(interfaceConsole: Interface): Promise<boolean> {
   console.log("\n=========================");
@@ -14,26 +15,40 @@ export async function menuController(interfaceConsole: Interface): Promise<boole
 
   const opcao = await interfaceConsole.question("Escolha uma opção: ");
 
-  // --- OPÇÃO 1: BUSCAR E SALVAR ---
+  // --- OPÇÃO 1: BUSCAR, VALIDAR E SALVAR ---
   if (opcao === "1") {
     const usernameInput = await interfaceConsole.question("\nDigite o username do GitHub: ");
-    const usuario: any = await buscarUsuario(usernameInput);
+    
+    // 1. Buscamos os dados brutos (unknown/any) vindos da API externa
+    const dadosBrutos = await buscarUsuario(usernameInput);
 
-    if (!usuario) return true; // Se não achou, volta pro menu
+    if (!dadosBrutos) return true; // Se a API não retornar nada, volta pro menu
 
-    console.log("\n--- Usuário Encontrado ---");
-    console.log(`Nome: ${usuario.name || "Não informado"}`);
-    console.log(`Username: ${usuario.login}`);
-    console.log("--------------------------\n");
+    try {
+      // 2. O validador estático intercepta, limpa os dados com Regex e tipa o objeto
+      const usuario = UsuarioGithubValidator.validate(dadosBrutos);
 
-    const desejaSalvar = await interfaceConsole.question("Deseja salvar este usuário? (s/n): ");
+      // 3. Exibição segura dos dados validados
+      console.log("\n--- Usuário Encontrado ---");
+      console.log(`Nome: ${usuario.name}`);
+      console.log(`Username: ${usuario.login}`);
+      console.log("--------------------------\n");
 
-    if (desejaSalvar.toLowerCase() !== "s") {
-      console.log("\nOperação de salvamento cancelada.");
-      return true;
+      const desejaSalvar = await interfaceConsole.question("Deseja salvar este usuário? (s/n): ");
+
+      if (desejaSalvar.toLowerCase() !== "s") {
+        console.log("\nOperação de salvamento cancelada.");
+        return true;
+      }
+
+      // 4. Salvando o objeto já higienizado pelo validador
+      await salvarUsuario(usuario);
+      
+    } catch (error: any) {
+      // Se o Regex ou o Type Guard capturarem algo errado, o erro é tratado aqui
+      console.log(`\n Erro de Validação: ${error.message}`);
     }
 
-    await salvarUsuario(usuario);
     return true;
   }
 
