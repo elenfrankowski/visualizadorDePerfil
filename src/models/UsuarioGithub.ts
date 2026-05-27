@@ -3,7 +3,7 @@ export class UsuarioGithub {
     public id: number,
     public login: string,
     public name: string,
-    public avatar_url: string,
-    public html_url: string
+    public avatar_url?: string, // O "?" torna o campo opcional
+    public html_url?: string    // O "?" torna o campo opcional
   ) {}
 }
